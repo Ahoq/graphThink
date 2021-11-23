@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div class="vertical-center">
+    <h2 style="text-align:center;">Login</h2>
+    <form action="{{ url_for('login') }}" method="post">
+
+      {{ form.hidden_tag() }}
+      
+      <div>
+        <h3>
+          {{ form.username.label(class="form-control-label") }}
+        </h3>
+        {{ form.username(class="form-control2") }}
+      </div>
+      <br>
+      
+      <div>
+        <h3>
+          {{ form.password.label(class="form-control-label") }}
+        </h3>
+        {{ form.password(class="form-control2") }}
+      </div>
+  
+      <br>
+      <div class="button__wrap">
+        {{ form.submit(class="button") }}
+        <div class="button__shadow"></div>
+      </div>
+
+      <div>
+        
+        <h3>Don't Have an Account? <a href="{{ url_for('register') }}">Sign Up Here!</a></h3>
+      
+    </div>
+    </form>
+  </div>
+
+{% endblock %}

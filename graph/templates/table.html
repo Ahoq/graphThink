@@ -1,0 +1,31 @@
+
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="post-tables">
+    <!-- <h2 style="margin-left: 3em; margin-top: 1em;">Recent Insights</h2> -->
+    <div class="post-insight">
+        {% include "display_posts.html" %}
+    </div>
+    <div class='tables'>
+        
+        <table class="table">
+            <tr class="table__header">
+                {% for header in headers %}
+                <th class="table__cell">{{ header }}</th>
+                {% endfor %}
+            </tr>
+            {% for row in rows %}
+            <tr class="table__row">
+                {% for cell in row %}
+                <td class="table__cell">{{ cell }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+            
+        </table>
+    
+    </div>
+
+</div>
+{% endblock %}

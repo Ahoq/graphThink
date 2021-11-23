@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="cont">
+    
+    <form action="{{ url_for('algo_run') }}" method="post">
+        <div style="display: flex;align-items: center;">
+            <h3>Run Algorithm:</h3>
+            <div class="select">
+                <select name="algo_list" class="label-form">
+                    {% for label in labels %}
+                    <option name='label' value= "{{label}}" id="labels">{{label}}</option>"
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="button2">
+                {{ form.search(class="button") }}
+                
+            </div>
+        </div>
+    </form>
+    <br>
+    <div class="post-tables" style="display: flex;align-items: center; justify-content: center;">
+        <!-- <h2 style="margin-left: 3em; margin-top: 1em;">Recent Insights</h2> -->
+        <div style="display: flex;align-items: center; justify-content: center;">
+            
+            <table class="table">
+                <tr class="table__header">
+                    {% for header in headers %}
+                    <th class="table__cell">{{ header }}</th>
+                    {% endfor %}
+                </tr>
+                {% for row in rows %}
+                <tr class="table__row">
+                    {% for cell in row %}
+                    <td class="table__cell">{{ cell }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+                
+            </table>
+        
+        </div>
+    
+    </div>
+    <!-- <select name="label_list" class="post-form">
+        {% for label in labels %}
+        <option name='label' value= "{{label}}" SELECTED>{{label}}</option>"
+        {% endfor %}
+    </select> -->
+    
+   
+</div>
+
+
+{% endblock %}

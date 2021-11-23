@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+{% block content %}
+
+  {% if not session.username %}
+  <div id="particle-js">
+    <div class="vertical-center">
+      <div class="text">
+        <h2>Create Knowledge </h2> 
+        <h3>Share with the world</h3>
+        <p>Welcome to Priscilla's Graph Web App -- GRAPHThink. The platform to help you discover, create, and share knowledge.
+        </p>
+      </div>
+      
+    </div>
+
+  </div>
+  
+  {% else %}
+  <div class="vertical-center">
+    <h1 style="text-align: center;">Share New Insight</h1>
+    <form action="{{ url_for('add_post') }}" method="post">
+      <div class="index_form">
+        <h3>Choose the Device</h3>
+        <select name="device_list" class="post-form">
+          {% for device in devices %}
+          <option name='device' value= "{{device}}" SELECTED>{{device}}</option>"
+          {% endfor %}
+        </select>
+        <br>
+        <br>
+        <div>
+          <h3>
+            {{ form.title.label(class="form-control-label") }}
+          </h3>
+          {{ form.title(class="post-form") }}
+        </div>
+        <br>
+        <div>
+          <h3>
+            {{ form.tags.label(class="form-control-label") }}
+          </h3>
+          {{ form.tags(class="post-form") }}
+        </div>
+        <br>
+        <div>
+          <h3>
+            {{ form.text.label(class="form-control-label") }}
+          </h3>
+          {{ form.text(class="insights") }}
+        </div>
+        <br>
+        <!-- <div>
+          <h3>
+            {{ form.reltn.label(class="form-control-label") }}
+          </h3>
+          {{ form.reltn(class="post-form") }}
+        </div>
+        <br> -->
+        <div class="button__wrap">
+          {{ form.publish(class="button") }}
+          <div class="button__shadow"></div>
+        </div>
+      </div>
+          
+    </form>
+    
+  </div>
+    
+  {% endif %}
+
+
+
+{% endblock %}

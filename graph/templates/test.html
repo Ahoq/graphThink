@@ -1,0 +1,14 @@
+
+{% extends "layout.html" %}
+{% block content %}
+
+<form action="{{ url_for('vis') }}" method="post"> -->
+    <select name="label_list" class="post-form">
+        {% for label in labels %}
+        <option name='label' value= "{{label}}" SELECTED>{{label}}</option>"
+        {% endfor %}
+    </select>
+</form>
+
+
+{% endblock %}

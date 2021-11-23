@@ -1,0 +1,61 @@
+<!doctype html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graph Database</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" type="text/css" href="/static/vis.css">
+  <script type="text/javascript" src="/static/vis.js"></script>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='menu.css') }}">
+  <script src="/static/particles.js"></script>
+  <script src="https://rawgit.com/neo4j-contrib/neovis.js/master/dist/neovis.js"></script>
+
+  
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+</head>
+
+<body>
+  <!-- <div id="particle-js"></div> -->
+  <div> 
+    <header>
+      <h2 class="logo">GRAPHThink</h2>
+      <menu>
+        <label for="trigger">
+        <input id="trigger" type="checkbox" />
+        <section class="drawer-list">
+          <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            {% if not session.username %}
+            <li><a href="{{ url_for('table') }}">Insights</a></li>
+            <li><a href="{{ url_for('algo') }}">Algo</a></li>
+            <li><a href="{{ url_for('plots') }}">Plots</a></li>
+            <li><a href="{{ url_for('register') }}">Register</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+            {% else %}
+            <li><a href="{{ url_for('table') }}">Insights</a></li>
+            <li><a href="{{ url_for('plots') }}">Plots</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% endif %}
+          </ul>
+        </section>
+        <hamburger> <i></i>
+          <text>
+            <close>close</close>
+            <open>menu</open>
+          </text>
+        </hamburger>
+        </label>
+      </menu>
+    </header>
+    </div>
+    {% for category,message in get_flashed_messages(with_categories=true) %}
+      <div class="{{ category }}">{{ message }}</div>
+    {% endfor %}
+    <div class="content">
+      {% block content %}{% endblock %}
+    </div>
+  
+  </div>
+  <script src="/static/app.js"></script>
+    
+</body>

@@ -1,0 +1,172 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<script type="text/javascript">
+
+    function draw() {
+        var d = "{{device}}";
+        var n = "{{dirt}}"
+        if (n=='NATURAL' & d != 'All'){
+            var s = `MATCH p=(a:${d})-[]->() RETURN p`
+        } else if (n=='REVERSE' & d != 'All'){
+            var s = `MATCH p=(a:${d})<-[]-() RETURN p`
+        } else if (n=='UNDIRECTED' & d != 'All'){
+            var s = `MATCH p=(a:${d})<-[]->() RETURN p`
+        } else if (d=='All'){
+            var s = `MATCH p=()<-[]->() RETURN p`
+        }
+        // var d = $('#my-data').data();
+        var config = {
+            container_id: "viz",
+            server_url: "bolt://localhost:7687",
+            server_user: "neo4j",
+            server_password: "test",
+            labels: {
+                'device':{
+                    caption: "name",
+                    size: "pageRank",
+                    image: "/static/ds3_1n.jpg",
+                    font: {
+                        size:35,
+                        color:"#4F8A10"
+                    },
+                    title_properties: [
+                        "name",
+                        "pageRank"
+                        ],
+                    },
+                'website':{
+                    caption: "name",
+                    size: "pageRank",
+                    font: {
+                        size:32,
+                        
+                    },
+                },
+                'provider':{
+                    caption: "name",
+                    size: "pageRank",
+                    font: {
+                        size:30,
+                        color:"#2d21cf"
+                    },
+                },
+                'DD':{
+                    caption: "name",
+                    size: "pageRank",
+                    font: {
+                        size:25,
+                        color:"#cf21bb"
+                    },
+                    title_properties: [
+                        "name",
+                        "date",
+                        "device",
+                        "vl_value",
+                        "gt_category",
+                        "country"
+                        ],
+                },
+                'plan_name':{
+                    caption: "name",
+                    size: "pageRank",
+                    font: {
+                        size:25,
+                        color:"#41cf21"
+                    },
+                    title_properties: [
+                        "name",
+                        "date",
+                        "website",
+                        "provider",
+                        "device",
+                        "contract_length",
+                        "data",
+                        "tco",
+                        "download",
+                        "upload"
+                        ],
+                
+                }
+                
+            },
+            relationships: {
+                "devices": {
+                    "thickness": "weight",
+                    "caption": true
+                },
+                "digital_demand": {
+                    "thickness": "weight",
+                    "caption": true
+                },
+                "offers": {
+                    "thickness": "weight",
+                    "caption": true
+                },
+                "offered": {
+                    "thickness": "weight",
+                    "caption": true
+                }
+            },
+            initial_cypher: s,
+            arrows: true,
+            hierarchial: true
+        };
+
+        var viz = new NeoVis.default(config);
+        viz.render();
+    }
+</script>
+
+<script>
+    window.onload = function() {
+    draw();
+    };
+</script>
+<!-- <meta id="my-data" data-name="{{device}}" data-other="{{other}}"> -->
+<div class="cont">
+    
+    <form action="{{ url_for('vis') }}" method="post">
+        <div style="display: flex;align-items: center;">
+            <h3>Node:</h3>
+            <div class="select">
+                <select name="label_list1" class="label-form">
+                    {% for label in labels %}
+                    <option name='label' value= "{{label}}" id="labels">{{label}}</option>"
+                    {% endfor %}
+                </select>
+            </div>
+            <h3>Orientation:</h3>
+            <div class="select">
+                <select name="label_list2" class="label-form">
+                    {% for label in orient %}
+                    <option name='label' value= "{{label}}">{{label}}</option>"
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="button__wrap">
+                {{ form.search(class="button") }}
+                <div class="button__shadow"></div>
+            </div>
+        </div>
+    </form>
+    <br>
+    
+    <!-- <select name="label_list" class="post-form">
+        {% for label in labels %}
+        <option name='label' value= "{{label}}" SELECTED>{{label}}</option>"
+        {% endfor %}
+    </select> -->
+    <div style="display: flex; align-items: center;">
+        <h3 style="margin-right: 1em;">Node: {{device}}</h3>
+        <h3>Orientation: {{dirt}}</h3>
+    </div>
+    
+    <div id="viz-cont">
+        <div id="viz"></div>
+    </div>
+    
+</div>
+   
+
+{% endblock %}
